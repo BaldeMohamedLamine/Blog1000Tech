@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supprimer l'article</title>
+    <link rel="stylesheet" href="{% static 'Article/bootstrap.css' %}">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Supprimer l'article</h1>
+        <p>Êtes-vous sûr de vouloir supprimer l'article suivant ?</p>
+        <h3>{{ object.title }}</h3>
+        <p><strong>Date de publication :</strong> {{ object.publication_date }}</p>
+        <p><strong>Contenu :</strong> {{ object.content }}</p>
+        
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Oui, supprimer</button>
+            <a href="{% url 'article_list' %}" class="btn btn-secondary">Annuler</a>
+        </form>
+    </div>
+    <script src="{% static 'Article/bootstrap.bundle.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'Account/Boostrap/bootstrap.css' %}">
+    <style>
+        body {
+            background-image: url('{% static "images/background.jpg" %}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.show {
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .modal-dialog {
+            margin: 0; /* Annule les marges par défaut pour le centrage */
+        }
+
+        .modal-content {
+            background-color: #fff; /* Couleur de fond du modal */
+            border-radius: .3rem; /* Coins arrondis du modal */
+            padding: 1.5rem; /* Espacement interne du modal */
+        }
+    </style>
+    <title>Connexion</title>
+</head>
+<body>
+    <!-- Modal de connexion -->
+    <div class="modal show d-block" id="loginModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Page de connexion</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn-success">Se connecter</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <p>Pas de compte ? <a href="{% url 'register' %}">Inscrivez-vous ici</a>.</p>
+                    <p><a href="{% url 'password_reset' %}">Mot de passe oublié ?</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts Bootstrap -->
+    <script src="{% static 'Account/Boostrap/bootstrap.bundle.js' %}"></script>
+</body>
+</html>

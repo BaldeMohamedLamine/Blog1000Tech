@@ -1,0 +1,61 @@
+/* Style pour la page de détails de l'article */
+h1 {
+    font-size: 2rem;
+    color: #333;
+}
+
+.article-card {
+    margin: 0 auto;
+    max-width: 700px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.card-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #007bff;
+    text-align: center;
+}
+
+.card-text {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.article-image {
+    display: block;
+    width: 100%; /* L'image prend toute la largeur du conteneur */
+    max-width: 100%; /* Évite que l'image dépasse le conteneur */
+    height: 200px; /* Hauteur fixe */
+    object-fit: cover; /* Ajuste l'image pour couvrir tout l'espace sans distorsion */
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+.button-group {
+    display: flex;
+    justify-content: center;
+}
+
+.btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.btn-secondary {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1rem;
+}

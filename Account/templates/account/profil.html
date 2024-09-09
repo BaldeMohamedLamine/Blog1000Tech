@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'Article/bootstrap.css' %}">
+    <title>profil</title>
+</head>
+<body>
+{% block title %}Profil de {{ user.username }}{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-lg">
+        <div class="card-body">
+            <h1 class="h3 mb-4 text-center">Profil de {{ user.username }}</h1>
+
+            <div class="row">
+                <div class="col-md-4 text-center">
+                    <!-- Affiche la photo de profil de l'utilisateur -->
+                    {% if user.profile.profile_photo %}
+                        <img src="{{ user.profile.profile_photo.url }}" class="rounded-circle img-thumbnail shadow" alt="Photo de profil" style="width: 200px; height: 200px; object-fit: cover;">
+                    {% else %}
+                        <img src="{% static 'images/default-profile.png' %}" class="rounded-circle img-thumbnail shadow" alt="Image par défaut" style="width: 200px; height: 200px; object-fit: cover;">
+                    {% endif %}
+                </div>
+
+                <div class="col-md-8">
+                    <div class="profile-info">
+                        <p><strong>Nom d'utilisateur :</strong> {{ user.username }}</p>
+                        <p><strong>Email :</strong> {{ user.email }}</p>
+                        <p><strong>Biographie :</strong> {{ user.profile.biographie|default:"Aucune biographie disponible." }}</p>
+                    </div>
+
+                    <!-- Lien pour modifier le profil -->
+                    <div class="text-end mt-3">
+                        <a href="{% url 'edit_profile' %}" class="btn btn-outline-primary shadow-sm">Modifier le profil</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .container {
+        max-width: 800px;
+    }
+
+    .profile-info p {
+        font-size: 1.1rem;
+        line-height: 1.5;
+    }
+
+    .btn-outline-primary {
+        font-weight: 500;
+    }
+</style>
+{% endblock %}
+<script src="{% static 'Article/bootstrap.bundle.js' %}"></script>
+</body>
+</html>

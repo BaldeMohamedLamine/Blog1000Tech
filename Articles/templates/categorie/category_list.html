@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'Article/bootstrap.css' %}">
+    <title>Liste des Categories</title>
+</head>
+<body>
+    <div class="container mt-4">
+        <a href="{% url 'category_create' %}" class="btn btn-success mb-3">Ajouter</a>
+        <div class="table-responsive">
+            <table class="table table-bordered table-sm">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Nom Categories</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in object_list %}
+                    <tr>
+                        <td>
+                            {{ item.name }}
+                        </td>
+                        <td>
+                            <a href="{% url 'category_update' item.pk %}" class="btn btn-warning btn-sm">Modifier</a>
+                            <a href="{% url 'category_delete' item.pk %}" class="btn btn-danger btn-sm">Supprimer</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="2" class="text-center">Aucun Categories trouvé.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="{% static 'Article/bootstrap.bundle.js' %}"></script>
+</body>
+</html>

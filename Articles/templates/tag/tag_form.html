@@ -1,0 +1,20 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'Article/bootstrap.css' %}">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="h3 mb-4">{% block title %}Créer / Modifier{% endblock %}</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+        </form>
+    </div>
+    <script src="{% static 'Article/bootstrap.bundle.js' %}"></script>
+</body>
+</html>

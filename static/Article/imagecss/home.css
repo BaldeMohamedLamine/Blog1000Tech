@@ -1,0 +1,58 @@
+/* Conteneur principal */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Titres des sections */
+.section-title {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Conteneur pour les cartes */
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+/* Style des cartes */
+.card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Titres des cartes */
+.card-title {
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+/* Texte des cartes */
+.card-text {
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+/* Liens dans les cartes */
+.card-link {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.card-link:hover {
+    text-decoration: underline;
+}

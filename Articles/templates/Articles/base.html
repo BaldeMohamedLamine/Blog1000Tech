@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'Article/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'Article/liste_article.css' %}">
+    <title>{% block title %}Mon Blog{% endblock %}</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{% url 'home' %}">Mon Blog</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'article_list' %}">Articles</a>
+                </li>
+                <!-- Ajoutez d'autres liens de navigation ici si nécessaire -->
+            </ul>
+            {% if user.is_authenticated %}
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'profile' %}">Bonjour, {{ user.username }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Déconnexion</a>
+                </li>
+            </ul>
+            {% else %}
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Connexion</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'signup' %}">Inscription</a>
+                </li>
+            </ul>
+            {% endif %}
+        </div>
+    </nav>
+    <!-- Barre de navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{% url 'home' %}">Mon Blog</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'article_list' %}">Articles</a>
+                </li>
+            </ul>
+            {% if user.is_authenticated %}
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'profile' %}">Bonjour, {{ user.username }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Déconnexion</a>
+                </li>
+            </ul>
+            {% else %}
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Connexion</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'signup' %}">Inscription</a>
+                </li>
+            </ul>
+            {% endif %}
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        {% block content %}
+        <!-- Le contenu sera injecté ici -->
+        {% endblock %}
+    </div>
+
+    <script src="{% static 'Article/bootstrap.bundle.js' %}"></script>
+</body>
+</html>

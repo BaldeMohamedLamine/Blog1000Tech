@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Confirmer la Suppression{% endblock %}
+
+{% block content %}
+    <h2 class="mb-4 text-center">Confirmer la Suppression</h2>
+    <div class="alert alert-warning" role="alert">
+        <p>Êtes-vous sûr de vouloir supprimer cet article ?</p>
+        <p><strong>Titre:</strong> {{ article.title }}</p>
+        <p><strong>Contenu:</strong> {{ article.content }}</p>
+        <p><strong>Date de Publication:</strong> {{ article.publication_date }}</p>
+    </div>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger btn-block">Supprimer</button>
+        <a href="{% url 'article_list' %}" class="btn btn-secondary btn-block mt-2">Annuler</a>
+    </form>
+{% endblock %}

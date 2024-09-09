@@ -1,0 +1,125 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'Article/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'Article/imagecss/liste_article.css' %}">
+    <title>Liste des Articles</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{% url 'home' %}">BlOG 1000TECH</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'article_list' %}">Articles</a>
+                </li>
+                <!-- Ajoutez d'autres liens de navigation ici si nécessaire -->
+            </ul>
+            {% if user.is_authenticated %}
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'edit_profile' %}">Bienvenue, {{ user.username }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Déconnexion</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'profil' %}">profil</a>
+                </li>
+            </ul>
+            {% endif %}
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <h1 class="h3 mb-4 text-center">Liste des Articles</h1>
+        <a href="{% url 'article_create' %}" class="btn btn-primary mb-3">Créer un article</a>
+        <nav class="navbar mb-4">
+            <div class="container-fluid">
+                <form class="d-flex ms-auto" role="search" method="get" action="{% url 'article_list' %}">
+                    <select class="form-control me-2" name="search_type">
+                        <option value="title">Titre</option>
+                        <option value="category">Catégorie</option>
+                        <option value="tag">Étiquette</option>
+                    </select>
+                    <input class="form-control me-2" type="search" name="q" placeholder="Recherche" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Rechercher</button>
+                </form>
+            </div>
+        </nav>
+        <div class="row">
+            {% for article in articles %}
+            <div class="col-md-3 mb-4"> 
+                <div class="card article-card">
+                    <!-- Affichage de la photo -->
+                    {% if article.image %}
+                    <img src="{{ article.image.url }}" class="card-img-top" alt="" style="height: 150px; object-fit: cover;">
+                    {% else %}
+                    <img src="{% static 'Article/default-image.jpg' %}" class="card-img-top" alt="Image par défaut" style="height: 150px; object-fit: cover;">
+                    {% endif %}
+
+                    <div class="card-body">
+                        <!-- Titre de l'article -->
+                        <h5 class="card-title article-title">{{ article.title }}</h5>
+
+                        <!-- Contenu de l'article (premiers 100 caractères) -->
+                        <p class="card-text article-content">{{ article.content|slice:":100" }}{% if article.content|length > 100 %}...{% endif %}</p>
+
+                        <!-- Affichage de l'auteur -->
+                        <p class="card-text">
+                            <strong>Auteur:</strong> 
+                            {% if article.author %}
+                                {{ article.author.username }}
+                            {% else %}
+                                Inconnu
+                            {% endif %}
+                        </p>
+
+                        <!-- Affichage des catégories -->
+                        <p class="card-text">
+                            <strong>Catégorie:</strong> 
+                            {% for category in article.categories.all %}
+                                {{ category.name }}{% if not forloop.last %}, {% endif %}
+                            {% empty %}
+                                Pas de catégories
+                            {% endfor %}
+                        </p>
+
+                        <!-- Affichage des tags -->
+                        <p class="card-text">
+                            <strong>Étiquette:</strong> 
+                            {% for tag in article.tags.all %}
+                                {{ tag.name }}{% if not forloop.last %}, {% endif %}
+                            {% empty %}
+                                Pas de tags
+                            {% endfor %}
+                        </p>
+                        <p>
+                            <strong>Publié le :</strong> {{ article.updated_at|date:"d/m/Y H:i" }}
+                        </p>
+                        <p>
+                            <strong>Créé le :</strong> {{ article.created_at|date:"d/m/Y H:i" }}
+                        </p>
+                    </div>
+                    
+                    <!-- Pied de page de la carte -->
+                    <div class="card-footer">
+                       <a href="{% url 'article_detail' article.pk %}" class="btn btn-info">Voir plus...</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% if not articles %}
+        <div class="alert alert-warning text-center" role="alert">
+            Aucun article trouvé. Cliquez sur "Créer un article" pour en ajouter un.
+        </div>
+        {% endif %}
+    </div>
+
+    <script src="{% static 'Article/bootstrap.bundle.js' %}"></script>
+</body>
+</html>

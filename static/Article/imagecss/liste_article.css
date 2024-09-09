@@ -1,0 +1,32 @@
+.card {
+    height: 450px; /* Limite la hauteur totale de la carte */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-body {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-height: 300px; /* Limite la hauteur du contenu dans la carte */
+}
+
+.card-body p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 1rem;
+}
+
+.card-footer {
+    background-color: #c9ddf3; /* Couleur de fond du pied de page */
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}
+.card-img-top {
+    height: 152px;         /* Fixe une hauteur pour l'image */
+    object-fit: cover;     /* Maintient le ratio de l'image sans déformation */
+}

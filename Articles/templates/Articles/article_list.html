@@ -10,7 +10,6 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="{% url 'home' %}">BlOG 1000TECH</a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
@@ -18,24 +17,39 @@
                 </li>
                 <!-- Ajoutez d'autres liens de navigation ici si nécessaire -->
             </ul>
-            {% if user.is_authenticated %}
+
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'edit_profile' %}">Bienvenue, {{ user.username }}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'logout' %}">Déconnexion</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'profil' %}">profil</a>
-                </li>
+                {% if user.is_authenticated %}
+                    <!-- L'utilisateur est connecté, on affiche les boutons Profil et Déconnexion -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'edit_profile' %}">Bienvenue, {{ user.username }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Déconnexion</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'profil' %}">Profil</a>
+                    </li>
+                {% else %}
+                    <!-- L'utilisateur n'est pas connecté, on affiche les boutons Connexion et Inscription -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Connexion</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">Inscription</a>
+                    </li>
+                {% endif %}
             </ul>
-            {% endif %}
         </div>
     </nav>
+
     <div class="container mt-5">
         <h1 class="h3 mb-4 text-center">Liste des Articles</h1>
-        <a href="{% url 'article_create' %}" class="btn btn-primary mb-3">Créer un article</a>
+
+        {% if user.is_authenticated %}
+            <a href="{% url 'article_create' %}" class="btn btn-primary mb-3">Créer un article</a>
+        {% endif %}
+
         <nav class="navbar mb-4">
             <div class="container-fluid">
                 <form class="d-flex ms-auto" role="search" method="get" action="{% url 'article_list' %}">
@@ -49,6 +63,7 @@
                 </form>
             </div>
         </nav>
+
         <div class="row">
             {% for article in articles %}
             <div class="col-md-3 mb-4"> 

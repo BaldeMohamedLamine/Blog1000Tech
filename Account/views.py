@@ -44,7 +44,7 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     messages.success(request, 'Vous êtes déconnecté.')
-    return redirect('login')
+    return redirect('article_list')
 
 #=======================profil=================================================
 @login_required

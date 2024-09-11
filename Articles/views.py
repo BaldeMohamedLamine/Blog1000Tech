@@ -42,12 +42,8 @@ def add_user_to_editeur_group(sender, instance, created, **kwargs):
 post_save.connect(add_user_to_editeur_group, sender=User)
 
 #==============================Article===============================
-def home(request):
-    recent_articles = Article.objects.all().order_by('-updated_at')[:10]
-    return render(request, 'Articles/home.html', {'recent_articles': recent_articles})
-
 # Afficher la liste des articles (Éditeurs et Administrateurs)
-class ArticleListeViews(LoginRequiredMixin, generic.ListView):
+class ArticleListeViews(generic.ListView):
     model = Article
     context_object_name = 'articles'
     template_name = 'Articles/article_list.html'

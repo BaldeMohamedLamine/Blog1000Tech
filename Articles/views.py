@@ -31,15 +31,13 @@ def create_groups():
     visiteur_permissions = Permission.objects.filter(codename='view_article')
     visiteur_group.permissions.set(visiteur_permissions)
 
-create_groups()
+
 
 # Ajouter automatiquement l'utilisateur au groupe des Éditeurs lors de l'inscription
 def add_user_to_editeur_group(sender, instance, created, **kwargs):
     if created:
         editeur_group = Group.objects.get(name='Éditeurs')
         instance.groups.add(editeur_group)
-
-post_save.connect(add_user_to_editeur_group, sender=User)
 
 #==============================Article===============================
 # Afficher la liste des articles (Éditeurs et Administrateurs)
@@ -96,6 +94,7 @@ class ArticleDetailView(generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         article = self.get_object()
+       
         user = self.request.user
 
         # Ajoutez les droits d'édition et de suppression pour les auteurs et les administrateurs
@@ -104,11 +103,14 @@ class ArticleDetailView(generic.DetailView):
             context['can_delete'] = user == article.author or user.is_superuser
             context['can_comment'] = True
             context['user_comments'] = article.commentaire.filter(author=user)
+            context['form'] = CommentForm()
         else:
             context['can_edit'] = False
             context['can_delete'] = False
             context['can_comment'] = False
             context['user_comments'] = []
+            
+            
 
         return context
 

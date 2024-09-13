@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-gg)5qv0^(i0r8w+t(6(a4p_w4f0nzti@j&=2jn3nny*x9z9n0%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://faradaylenz.pythonanywhere.com','http://127.0.0.1/']
+ALLOWED_HOSTS = ['https://faradaylenz.pythonanywhere.com','127.0.0.1']
 
 
 # Application definition
@@ -84,10 +84,21 @@ WSGI_APPLICATION = 'Blog.wsgi.application'
 # }
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',  # Utilise le backend MySQL
+        'NAME': 'lenz_db',  # Remplacez par le nom de votre base de données
+        'USER': 'root',  # Remplacez par votre nom d'utilisateur MySQL
+        'PASSWORD': '',  # Remplacez par votre mot de passe MySQL
+        'HOST': 'localhost',  # Ou l'adresse IP de votre serveur MySQL
+        'PORT': '3306',  # Port MySQL par défaut
     }
 }
 

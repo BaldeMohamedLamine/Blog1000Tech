@@ -1,10 +1,11 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="fr">
 
 <head>
     <meta charset="utf-8">
-    <title>Page d'Accueil</title>
+    <title>Liste des Articles</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="keywords" content="">
     <meta name="description" content="">
@@ -31,7 +32,7 @@
 
 <body>
     <!-- Navbar -->
-    <div >
+    <div>
         <nav class="navbar navbar-expand-lg navbar-light">
             <a href="{% url 'article_create' %}" class="navbar-brand p-0">
                 <h1 class="display-6 text-dark"><i class="fas fa-laptop-code text-primary me-3"></i>Faraday Lenz</h1>
@@ -41,11 +42,22 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav mx-auto">
+                    <!-- Menu déroulant pour les catégories -->
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Catégories</a>
+                        <div class="dropdown-menu">
+                            {% for category in categories %}
+                            <a href="{% url 'article_list' %}?category={{ category.name }}" class="dropdown-item">
+                                {{ category.name }}
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
                     {% if user.is_authenticated %}
-                    <a href="{% url 'article_create' %}" class="nav-item nav-link">Créer un article</a> 
+                    <a href="{% url 'article_create' %}" class="nav-item nav-link">Créer un article</a>
                     <a href="{% url 'edit_profile' %}" class="nav-item nav-link">Bienvenue, {{ user.username }}</a>
                     <a href="{% url 'logout' %}" class="nav-item nav-link">Déconnexion</a>
-                    <a href="{% url 'profil' %}" class="nav-item nav-link">Profil</a>
                     {% else %}
                     <a href="{% url 'login' %}" class="nav-item nav-link active">Connexion</a>
                     <a href="{% url 'register' %}" class="nav-item nav-link">Inscription</a>
@@ -66,8 +78,7 @@
 
     <!-- Header Section -->
     <div class="container-fluid bg-breadcrumb text-center py-5">
-        <h1 class="text-white display-4">Bienvenue sur le Blog 1000Tech</h1>
-        <p class="lead text-white">Découvrez les derniers articles technologiques, conseils et innovations.</p>
+        <h1 class="text-white display-4">Liste des Articles{% if selected_category %} - Catégorie : {{ selected_category }}{% endif %}</h1>
     </div>
 
     <!-- Blog Section -->
@@ -76,25 +87,17 @@
             {% for article in articles %}
             <div class="col-lg-4 col-md-6 mb-4">
                 <div class="card h-100">
-                    <!-- Image -->
+                    <!-- Image de l'article -->
                     {% if article.image %}
                     <img src="{{ article.image.url }}" class="card-img-top" alt="Image de l'article">
                     {% else %}
                     <img src="{% static 'Article/default-image.jpg' %}" class="card-img-top" alt="Image par défaut">
                     {% endif %}
                     <div class="card-body">
-                        <!-- Titre de l'article -->
                         <h5 class="card-title">{{ article.title }}</h5>
-                        <!-- Extrait du contenu -->
-                        <p class="card-text">{{ article.content|slice:":100" }}{% if article.content|length > 100 %}...{% endif %}</p>
-                        <!-- Auteur -->
+                        <p class="card-text">{{ article.content|slice:":100" }}...</p>
                         <p class="card-text"><strong>Auteur:</strong> {{ article.author.username }}</p>
-                        <!-- Catégories -->
-                        <p class="card-text"><strong>Catégories:</strong> {% for category in article.categories.all %}{{ category.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
-                        <!-- Tags -->
-                        <p class="card-text"><strong>Tags:</strong> {% for tag in article.tags.all %}{{ tag.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
                     </div>
-                    <!-- Footer de la carte -->
                     <div class="card-footer">
                         <a href="{% url 'article_detail' article.pk %}" class="btn btn-primary">Voir plus</a>
                     </div>
@@ -106,7 +109,7 @@
         <!-- Message si aucun article n'est trouvé -->
         {% if not articles %}
         <div class="alert alert-warning text-center">
-            Aucun article trouvé. Cliquez sur "Créer un article" pour en ajouter un.
+            Aucun article trouvé pour cette catégorie.
         </div>
         {% endif %}
     </div>

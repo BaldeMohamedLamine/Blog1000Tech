@@ -47,7 +47,18 @@ class ArticleListeViews(generic.ListView):
     template_name = 'Articles/article_list.html'
 
     def get_queryset(self):
-        return Article.objects.all().order_by('-updated_at')
+        queryset = Article.objects.all().order_by('-updated_at')
+        category = self.request.GET.get('category')
+        if category:
+            queryset = queryset.filter(categories__name=category)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category = self.request.GET.get('category')
+        context['categories'] = Category.objects.all()
+        context['selected_category'] = category  # Pour la catégorie sélectionnée
+        return context
 
 # Créer un nouvel article (Éditeurs et Administrateurs)
 class ArticleCreateView(LoginRequiredMixin, generic.CreateView):

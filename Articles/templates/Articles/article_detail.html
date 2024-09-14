@@ -22,6 +22,7 @@
                 {% endif %}
                 <h5 class="card-title">{{ article.title }}</h5>
                 <p class="card-text">{{ article.content }}</p>
+                <p class="card-text"><strong>Auteur:</strong> {{ article.author.username }}</p>
                 <p class="card-text"><small class="text-muted">Publié le {{ article.updated_at|date:"d/m/Y H:i" }}</small></p>
 
                 {% if can_edit %}
